@@ -5,7 +5,7 @@ import Peer from 'simple-peer';
 const SocketContext = createContext();
 
 const socket = io('http://localhost:5000');
-// const socket = io('https://warm-wildwood-81069.herokuapp.com');
+// const socket = io('https://video-chat-app-qxad.onrender.com/');
 
 const ContextProvider = ({ children }) => {
     const [callAccepted, setCallAccepted] = useState(false);
@@ -17,6 +17,7 @@ const ContextProvider = ({ children }) => {
 
     const myVideo = useRef();
     const userVideo = useRef();
+    const scrollToTop = useRef();
     const connectionRef = useRef();
 
     useEffect(() => {
@@ -25,7 +26,6 @@ const ContextProvider = ({ children }) => {
                 setStream(currentStream);
 
                 if (myVideo.current) {
-
                     myVideo.current.srcObject = currentStream;
                 }
             });
@@ -39,6 +39,10 @@ const ContextProvider = ({ children }) => {
 
     const answerCall = () => {
         setCallAccepted(true);
+
+        if (scrollToTop.current) {
+            scrollToTop.current.scrollIntoView({ behavior: 'smooth' });
+        }
 
         const peer = new Peer({ initiator: false, trickle: false, stream });
 
@@ -57,6 +61,7 @@ const ContextProvider = ({ children }) => {
 
     const callUser = (id) => {
         const peer = new Peer({ initiator: true, trickle: false, stream });
+
 
         peer.on('signal', (data) => {
             socket.emit('callUser', { userToCall: id, signalData: data, from: me, name });
@@ -80,7 +85,7 @@ const ContextProvider = ({ children }) => {
 
         connectionRef.current.destroy();
 
-        window.location.reload();
+        window.location.reload()
     };
 
     return (
@@ -97,6 +102,7 @@ const ContextProvider = ({ children }) => {
             callUser,
             leaveCall,
             answerCall,
+            scrollToTop
         }}
         >
             {children}
