@@ -1,39 +1,39 @@
 import React, { useState, useContext } from "react";
-import { Button, TextField, Typography, Container, Paper } from "@mui/material";
+import { Button, TextField, Typography, Paper, Container } from "@mui/material";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Phone, PhoneDisabled } from "@mui/icons-material";
 
 import { SocketContext } from "../Context";
 
-const boxStyle = {
-  background: "rgba(255, 255, 255, 0.1)",
-  borderRadius: "20px",
+const cardStyle = {
+  background: "rgba(255,255,255,0.1)",
+  borderRadius: "16px",
   padding: "25px",
-  backdropFilter: "blur(14px)",
-  width: "100%",
+  backdropFilter: "blur(12px)",
+  border: "1px solid rgba(255,255,255,0.2)",
+  maxWidth: "450px",
+  margin: "0 auto",
 };
 
-const Options = ({ children }) => {
+export default function Options({ children }) {
   const { me, callAccepted, callEnded, leaveCall, callUser } =
     useContext(SocketContext);
-
   const [idToCall, setIdToCall] = useState("");
 
   return (
-    <Container maxWidth="xs">
-      <Paper elevation={12} style={boxStyle}>
-        {/* ---- Copy ID ---- */}
+    <Container maxWidth="sm">
+      <Paper elevation={10} style={cardStyle}>
         <Typography variant="h6" style={{ color: "#fff", fontWeight: 600 }}>
           Your Meeting ID
         </Typography>
 
         <CopyToClipboard text={me}>
           <Button
-            variant="contained"
             fullWidth
+            variant="contained"
             style={{
-              marginTop: 12,
-              background: "linear-gradient(to right, #667eea, #764ba2)",
+              marginTop: "15px",
+              background: "linear-gradient(90deg, #667eea, #764ba2)",
               color: "#fff",
               fontWeight: 600,
             }}
@@ -42,36 +42,34 @@ const Options = ({ children }) => {
           </Button>
         </CopyToClipboard>
 
-        {/* ---- Enter ID ---- */}
         <Typography
           variant="h6"
-          style={{ color: "#fff", fontWeight: 600, marginTop: 20 }}
+          style={{ marginTop: "25px", color: "#fff", fontWeight: 600 }}
         >
           Join a Meeting
         </Typography>
 
         <TextField
-          label="Enter Meeting ID"
           variant="filled"
           fullWidth
+          placeholder="Enter Meeting ID"
           value={idToCall}
           onChange={(e) => setIdToCall(e.target.value)}
+          style={{ marginTop: "10px" }}
           InputProps={{
-            style: { background: "#ffffffcc", borderRadius: 8 },
+            style: { background: "#fff", borderRadius: 8 },
           }}
-          style={{ marginTop: 10 }}
         />
 
-        {/* CALL / HANG UP */}
         {callAccepted && !callEnded ? (
           <Button
-            variant="contained"
             fullWidth
+            variant="contained"
             onClick={leaveCall}
             startIcon={<PhoneDisabled />}
             style={{
-              marginTop: 15,
-              backgroundColor: "#ff4d4f",
+              marginTop: "15px",
+              background: "#ff4d4f",
               color: "#fff",
               fontWeight: 600,
             }}
@@ -80,13 +78,13 @@ const Options = ({ children }) => {
           </Button>
         ) : (
           <Button
-            variant="contained"
             fullWidth
+            variant="contained"
             onClick={() => callUser(idToCall)}
             startIcon={<Phone />}
             style={{
-              marginTop: 15,
-              background: "linear-gradient(to right, #43cea2, #185a9d)",
+              marginTop: "15px",
+              background: "linear-gradient(90deg, #43cea2, #185a9d)",
               color: "#fff",
               fontWeight: 600,
             }}
@@ -95,11 +93,8 @@ const Options = ({ children }) => {
           </Button>
         )}
 
-        {/* Notifications */}
         {children}
       </Paper>
     </Container>
   );
-};
-
-export default Options;
+}

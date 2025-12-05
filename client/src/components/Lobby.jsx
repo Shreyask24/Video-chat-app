@@ -3,7 +3,8 @@ import { Button, TextField, Paper, Typography } from "@mui/material";
 import { SocketContext } from "../Context";
 
 const cardStyle = {
-  width: "420px",
+  width: "90%",
+  maxWidth: "420px",
   padding: "30px",
   borderRadius: "20px",
   background: "rgba(255,255,255,0.1)",

@@ -29,36 +29,26 @@ const HomeScreen = () => {
       style={{
         minHeight: "100vh",
         background: "linear-gradient(to right, #667eea, #764ba2)",
-        fontFamily: "'Poppins', sans-serif",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
         alignItems: "center",
       }}
     >
-      {/* NAVBAR */}
+      {/* Navbar */}
       <AppBar position="static" elevation={0} style={appBarStyle}>
         <Typography
           variant="h4"
-          align="left"
-          style={{
-            fontWeight: 700,
-            color: "#fff",
-            letterSpacing: "2px",
-            marginLeft: "2%",
-          }}
+          style={{ marginLeft: 20, color: "#fff", fontWeight: 700 }}
         >
           Live RTC
         </Typography>
       </AppBar>
 
-      {/* MAIN CONTENT */}
-      <Container maxWidth="lg" style={{ flex: 1 }}>
-        {/* Videos Always at Top */}
+      {/* Content */}
+      <Container maxWidth="md" style={{ marginTop: 30, marginBottom: 40 }}>
         <VideoPlayer />
 
-        {/* Options Below Videos */}
-        <div style={{ marginTop: "40px" }}>
+        <div style={{ marginTop: 30 }}>
           <Options>
             <Notifications />
           </Options>
