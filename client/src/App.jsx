@@ -5,7 +5,6 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import VideoPlayer from "./components/VideoPlayer";
 import Options from "./components/Options";
 import Notifications from "./components/Notification";
-import Profile from "./components/Profile";
 
 import { SocketContext } from "./Context";
 import Lobby from "./components/Lobby";
@@ -86,7 +85,6 @@ const App = () => {
     <Routes>
       <Route path="/lobby" element={<Lobby />} />
       <Route path="/" element={<HomeScreen />} />
-      {/* <Route path="/profile" element={<Profile />} /> */}
     </Routes>
   );
 };

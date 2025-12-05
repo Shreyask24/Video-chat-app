@@ -7,37 +7,38 @@ Users can join meetings using a unique ID, preview their camera in a lobby scree
 
 ## **Features**
 
-### Google Meet–Style Lobby  
-- Camera preview before joining  
-- User enters name  
-- “Join Meeting” button  
-- Prevents entering main UI without name  
+### Google Meet–Style Lobby
 
-### Real-time Video Calling  
-- WebRTC peer-to-peer video streaming  
-- Caller & receiver video tiles  
-- Responsive side-by-side layout  
-- Auto-resizes based on call state  
+- Camera preview before joining
+- User enters name
+- “Join Meeting” button
+- Prevents entering main UI without name
 
-### Meeting ID System  
-- Auto-generated unique meeting/user ID  
-- Single-click “Copy Your ID”  
-- Another user pastes ID → joins instantly  
+### Real-time Video Calling
 
-### Clean UI & Glassmorphism  
-- Gradient background  
-- Smooth rounded video cards  
-- Floating call controls  
-- Modern minimal design  
+- WebRTC peer-to-peer video streaming
+- Caller & receiver video tiles
+- Responsive side-by-side layout
+- Auto-resizes based on call state
 
-### Profile Page  
-- User can update their name  
-- Name stored in `localStorage`  
+### Meeting ID System
 
-### Notifications  
-- Incoming call popup  
-- Accept call button  
-- Auto scroll into view  
+- Auto-generated unique meeting/user ID
+- Single-click “Copy Your ID”
+- Another user pastes ID → joins instantly
+
+### Clean UI & Glassmorphism
+
+- Gradient background
+- Smooth rounded video cards
+- Floating call controls
+- Modern minimal design
+
+### Notifications
+
+- Incoming call popup
+- Accept call button
+- Auto scroll into view
 
 ---
 
