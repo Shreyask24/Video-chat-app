@@ -1,62 +1,108 @@
-import React, { useContext } from 'react';
-import { Typography, AppBar, Container } from '@mui/material';
+import React, { useContext, useEffect } from "react";
+import { Typography, AppBar, Container, Button, Grid } from "@mui/material";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
-import VideoPlayer from './components/VideoPlayer';
-import Options from './components/Options';
-import Notifications from './components/Notification';
-import { SocketContext } from './Context';
+import VideoPlayer from "./components/VideoPlayer";
+import Options from "./components/Options";
+import Notifications from "./components/Notification";
+import Profile from "./components/Profile";
 
+import { SocketContext } from "./Context";
+import Lobby from "./components/Lobby";
+
+/* ------------------- UI Style ------------------- */
 const appBarStyle = {
-  background: 'rgba(255, 255, 255, 0.1)',
-  backdropFilter: 'blur(10px)',
-  borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-  boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
-  padding: '20px 0',
+  background: "rgba(255, 255, 255, 0.1)",
+  backdropFilter: "blur(10px)",
+  borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
+  boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
+  padding: "20px 0",
 };
 
-const App = () => {
+/* ------------------- Home Screen ------------------- */
+const HomeScreen = () => {
+  const navigate = useNavigate();
   const { scrollToTop } = useContext(SocketContext);
 
   return (
     <div
       ref={scrollToTop}
       style={{
-        minHeight: '100vh',
-        background: 'linear-gradient(to right, #667eea, #764ba2)',
+        minHeight: "100vh",
+        background: "linear-gradient(to right, #667eea, #764ba2)",
         fontFamily: "'Poppins', sans-serif",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
+      {/* NAVBAR */}
       <AppBar position="static" elevation={0} style={appBarStyle}>
         <Typography
-          variant="h3"
-          align="center"
+          variant="h4"
+          align="left"
           style={{
             fontWeight: 700,
-            fontStyle: 'italic',
-            color: '#fff',
-            letterSpacing: '2px',
+            color: "#fff",
+            letterSpacing: "2px",
+            marginLeft: "2%",
           }}
         >
           Live RTC
         </Typography>
+
+        <Button
+          color="inherit"
+          variant="outlined"
+          style={{
+            position: "absolute",
+            right: 20,
+            top: 20,
+            borderColor: "#fff",
+            color: "#fff",
+          }}
+          onClick={() => navigate("/profile")}
+        >
+          Profile
+        </Button>
       </AppBar>
 
-      <Container
-        maxWidth="lg"
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '40px',
-          padding: '40px 20px',
-        }}
-      >
+      {/* MAIN CONTENT */}
+      <Container maxWidth="lg" style={{ flex: 1 }}>
+        {/* Videos Always at Top */}
         <VideoPlayer />
-        <Options>
-          <Notifications />
-        </Options>
+
+        {/* Options Below Videos */}
+        <div style={{ marginTop: "40px" }}>
+          <Options>
+            <Notifications />
+          </Options>
+        </div>
       </Container>
     </div>
+  );
+};
+
+/* ------------------- Main App Component ------------------- */
+const App = () => {
+  const { name } = useContext(SocketContext);
+  const navigate = useNavigate();
+
+  // Auto-redirect if the user has NOT set their name
+  // If no name → force lobby
+  useEffect(() => {
+    if (!name || name.trim() === "") {
+      navigate("/lobby");
+    }
+  }, [name, navigate]);
+
+  return (
+    <Routes>
+      <Route path="/lobby" element={<Lobby />} />
+      <Route path="/" element={<HomeScreen />} />
+      <Route path="/profile" element={<Profile />} />
+    </Routes>
   );
 };
 

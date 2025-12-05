@@ -1,72 +1,77 @@
-import React, { useContext } from 'react';
-import { Typography, Grid, Paper } from '@mui/material';
-import { SocketContext } from '../Context';
+import React, { useContext } from "react";
+import { Grid, Paper, Typography } from "@mui/material";
+import { SocketContext } from "../Context";
 
-const videoContainerStyle = {
-    backdropFilter: 'blur(10px)',
-    background: 'rgba(255, 255, 255, 0.1)',
-    border: '1px solid rgba(255, 255, 255, 0.2)',
-    borderRadius: '20px',
-    boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
-    padding: '20px',
-    margin: '20px',
-    width: '100%',
-    maxWidth: '600px',
+const videoBox = {
+  background: "rgba(255,255,255,0.12)",
+  padding: "20px",
+  borderRadius: "20px",
+  backdropFilter: "blur(14px)",
+  width: "100%",
 };
 
 const videoStyle = {
-    width: '100%',
-    borderRadius: '12px',
+  width: "100%",
+  borderRadius: "12px",
 };
 
-const VideoPlayer = () => {
-    const { name, callAccepted, myVideo, userVideo, callEnded, stream, call } = useContext(SocketContext);
+export default function VideoPlayer() {
+  const { name, call, callAccepted, callEnded, myVideo, userVideo, stream } =
+    useContext(SocketContext);
 
-    return (
-        <Grid
-            container
-            spacing={4}
-            justifyContent="center"
-            alignItems="center"
-            style={{
-                width: '100vw',
-                minHeight: '100vh',
-                padding: '40px 20px',
-                background: 'linear-gradient(to right, #667eea, #764ba2)',
-                fontFamily: "'Poppins', sans-serif",
-            }}
-        >
-            {/* Own Video */}
-            {stream && (
-                <Paper elevation={6} style={videoContainerStyle}>
-                    <Typography
-                        variant="h6"
-                        align="center"
-                        gutterBottom
-                        style={{ color: '#fff', fontWeight: 600 }}
-                    >
-                        {name || 'Your Name'}
-                    </Typography>
-                    <video playsInline muted ref={myVideo} autoPlay style={videoStyle} />
-                </Paper>
-            )}
+  const hasRemote = callAccepted && !callEnded;
 
-            {/* User's Video */}
-            {callAccepted && !callEnded && (
-                <Paper elevation={6} style={videoContainerStyle}>
-                    <Typography
-                        variant="h6"
-                        align="center"
-                        gutterBottom
-                        style={{ color: '#fff', fontWeight: 600 }}
-                    >
-                        {call.name || 'Caller'}
-                    </Typography>
-                    <video playsInline ref={userVideo} autoPlay style={videoStyle} />
-                </Paper>
-            )}
+  return (
+    <Grid
+      container
+      spacing={8}
+      justifyContent="center"
+      alignItems="center"
+      style={{ width: "100%", margin: 0 }}
+    >
+      {/* -----------------------------------------
+          YOUR VIDEO (Centered when single)
+      ------------------------------------------ */}
+      {stream && (
+        <Grid item xs={12} md={hasRemote ? 6 : 6}>
+          <Paper elevation={8} style={videoBox}>
+            <Typography
+              variant="h6"
+              align="center"
+              style={{ color: "#fff", fontWeight: 600, marginBottom: 8 }}
+            >
+              {name || "You"}
+            </Typography>
+
+            <video
+              playsInline
+              muted
+              ref={myVideo}
+              autoPlay
+              style={videoStyle}
+            />
+          </Paper>
         </Grid>
-    );
-};
+      )}
 
-export default VideoPlayer;
+      {/* -----------------------------------------
+          REMOTE VIDEO (Appears when call accepted)
+      ------------------------------------------ */}
+      {hasRemote && (
+        <Grid item xs={12} md={6}>
+          <Paper elevation={8} style={videoBox}>
+            <Typography
+              variant="h6"
+              align="center"
+              style={{ color: "#fff", fontWeight: 600, marginBottom: 8 }}
+            >
+              {call.name || "Caller"}
+            </Typography>
+
+            <video playsInline ref={userVideo} autoPlay style={videoStyle} />
+          </Paper>
+        </Grid>
+      )}
+    </Grid>
+  );
+}
