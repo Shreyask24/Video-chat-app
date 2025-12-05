@@ -51,21 +51,6 @@ const HomeScreen = () => {
         >
           Live RTC
         </Typography>
-
-        <Button
-          color="inherit"
-          variant="outlined"
-          style={{
-            position: "absolute",
-            right: 20,
-            top: 20,
-            borderColor: "#fff",
-            color: "#fff",
-          }}
-          onClick={() => navigate("/profile")}
-        >
-          Profile
-        </Button>
       </AppBar>
 
       {/* MAIN CONTENT */}
@@ -101,7 +86,7 @@ const App = () => {
     <Routes>
       <Route path="/lobby" element={<Lobby />} />
       <Route path="/" element={<HomeScreen />} />
-      <Route path="/profile" element={<Profile />} />
+      {/* <Route path="/profile" element={<Profile />} /> */}
     </Routes>
   );
 };
